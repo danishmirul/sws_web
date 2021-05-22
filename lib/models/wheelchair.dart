@@ -9,6 +9,7 @@ class Wheelchair {
   String status;
   // List<Log> logs;
   bool accessible;
+  DateTime createdAt;
 
   Wheelchair({
     this.uid,
@@ -19,7 +20,13 @@ class Wheelchair {
     this.status,
     // this.logs,
     this.accessible = true,
-  });
+    createdAt,
+  }) {
+    if (createdAt == null || createdAt == 0)
+      this.createdAt = DateTime.now();
+    else
+      this.createdAt = createdAt;
+  }
 
   Wheelchair.copy(Wheelchair from)
       : this(
@@ -30,13 +37,12 @@ class Wheelchair {
           battery: from.battery,
           status: from.status,
           accessible: from.accessible,
+          createdAt: from.createdAt,
         );
 
   @override
-  String toString() {
-    // TODO: implement toString
-    return "{ uid:${this.uid}, name:${this.name}, address:${this.address}, plate:${this.plate}, battery:${this.battery}, status:${this.status}, accessible:${this.accessible} }";
-  }
+  String toString() =>
+      "{ uid:${this.uid}, name:${this.name}, address:${this.address}, plate:${this.plate}, battery:${this.battery}, status:${this.status}, accessible:${this.accessible} }";
 
   // initialised through snapshot
   Wheelchair.fromSnapShot(DocumentSnapshot snapshot) {
@@ -49,6 +55,7 @@ class Wheelchair {
     this.status = snapshot.data['status'];
     // this.logs = snapshot.data['logs'];
     this.accessible = snapshot.data['accessible'];
+    this.createdAt = snapshot.data['createdAt'].toDate();
   }
 
   // map to object
@@ -80,6 +87,10 @@ class Wheelchair {
     if (accessible == null) {
       return null;
     }
+    final DateTime createdAt = data['createdAt'].toDate();
+    if (createdAt == null) {
+      return null;
+    }
 
     return Wheelchair(
       uid: uid,
@@ -89,6 +100,7 @@ class Wheelchair {
       battery: battery,
       status: status,
       accessible: accessible,
+      createdAt: createdAt,
     );
   }
 
@@ -101,6 +113,7 @@ class Wheelchair {
       'battery': battery,
       'status': status,
       'accessible': accessible,
+      'createdAt': createdAt,
     };
   }
 }

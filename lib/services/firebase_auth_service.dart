@@ -2,27 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sws_web/pages/home_screen.dart';
-import 'package:sws_web/pages/menu_options.dart';
-import 'package:sws_web/pages/signin/sign_in_screen.dart';
 
 import '../models/user.dart';
 
 class FirebaseAuthService {
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
-
-  //Handle Authentication
-  handleAuth() {
-    return StreamBuilder(
-      stream: FirebaseAuth.instance.onAuthStateChanged,
-      builder: (context, snapshot) {
-        return snapshot.hasData
-            ? HomeScreen(menuOption: menuOptions[1])
-            : SignInScreen();
-      },
-    );
-  }
 
   FirebaseAuthService({FirebaseAuth firebaseAuth, GoogleSignIn googleSignin})
       : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
@@ -73,12 +58,13 @@ class FirebaseAuthService {
     }
   }
 
-  Future<void> resetPassword({@required String email}) async {
+  Future<bool> resetPassword({@required String email}) async {
     try {
-      return await _firebaseAuth.sendPasswordResetEmail(email: email);
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      return true;
     } catch (e) {
       print(e);
-      return null;
+      return false;
     }
   }
 

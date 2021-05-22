@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:sws_web/constants/color.dart';
+import 'package:sws_web/constants.dart';
 import 'package:sws_web/routing/router.dart';
-import 'package:sws_web/wrapper/wrapper.dart';
+import 'package:sws_web/screens/auth/components/auth.dart';
 
 void main() {
   // WidgetsFlutterBinding.ensureInitialized();
-  runApp(Application());
+  runApp(Auth());
 }
 
 class MyApp extends StatelessWidget {
@@ -16,11 +16,11 @@ class MyApp extends StatelessWidget {
       title: 'Smart Wheelchair System',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: cPrimaryColor,
+        primaryColor: kPrimaryColor,
         fontFamily: 'OpenSans',
       ),
       onGenerateRoute: generateRoute,
-      home: Application(),
+      home: Auth(),
     );
   }
 }

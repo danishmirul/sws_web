@@ -30,8 +30,6 @@ class Staff {
         );
 
   @override
-  String toString() {
-    // TODO: implement toString
-    return "{ uid:${this.uid}, fullname:${this.fullname}, email:${this.email}, phone:${this.phone}, hotline:${this.hotline} }";
-  }
+  String toString() =>
+      "{ uid:${this.uid}, fullname:${this.fullname}, email:${this.email}, phone:${this.phone}, hotline:${this.hotline} }";
 }

@@ -8,13 +8,14 @@ class Message {
   String text;
   DateTime createdAt;
 
-  Message(
-      {this.uid,
-      this.wheelchairId,
-      this.whom,
-      this.label,
-      this.text,
-      createdAt}) {
+  Message({
+    this.uid,
+    this.wheelchairId,
+    this.whom,
+    this.label,
+    this.text,
+    createdAt,
+  }) {
     if (createdAt == null || createdAt == 0)
       this.createdAt = DateTime.now();
     else
