@@ -4,6 +4,7 @@ import 'package:sws_web/controllers/menu_controller.dart';
 import 'package:sws_web/responsive.dart';
 import 'package:sws_web/routing/routes.dart';
 import 'package:sws_web/screens/dashboard/dashboard_screen.dart';
+import 'package:sws_web/screens/location/location_screen.dart';
 import 'package:sws_web/screens/profile/profile_screen.dart';
 import 'package:sws_web/screens/user/user_screen.dart';
 import 'package:sws_web/screens/wheelchair/wheelchair_screen.dart';
@@ -34,7 +35,7 @@ class _MainScreenState extends State<MainScreen>
         content = UserScreen();
         break;
       case LOCATION_ROUTE:
-        content = DashboardScreen();
+        content = LocationScreen();
         break;
       case PROFILE_ROUTE:
         content = ProfileScreen();

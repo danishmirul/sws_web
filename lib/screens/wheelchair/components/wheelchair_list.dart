@@ -7,6 +7,8 @@ import 'package:sws_web/routing/routes.dart';
 import 'package:sws_web/screens/message/view_messages.dart';
 import 'package:sws_web/screens/wheelchair/components/update_wheelchair_form.dart';
 import 'package:sws_web/screens/wheelchair/components/view_wheelchair_information.dart';
+import 'package:sws_web/screens/wheelchair/components/wheelchair_location.dart';
+import 'package:sws_web/screens/wheelchair/components/wheelchair_navigation.dart';
 import 'package:sws_web/services/firestore_service.dart';
 import 'package:sws_web/widgets/loading.dart';
 import 'package:sws_web/widgets/progress_line.dart';
@@ -14,7 +16,8 @@ import 'package:sws_web/widgets/progress_line.dart';
 import '../../../constants.dart';
 
 class WheelchairList extends StatefulWidget {
-  WheelchairList({Key key}) : super(key: key);
+  WheelchairList({@required this.route, Key key}) : super(key: key);
+  final String route;
 
   @override
   _WheelchairListState createState() => _WheelchairListState();
@@ -117,7 +120,8 @@ class _WheelchairListState extends State<WheelchairList> {
                         ],
                         rows: List.generate(
                           wheelchairs.length,
-                          (index) => wheelchairRow(context, wheelchairs[index]),
+                          (index) => wheelchairRow(
+                              context, wheelchairs[index], widget.route),
                         ),
                       ),
                     ),
@@ -148,7 +152,7 @@ class _WheelchairListState extends State<WheelchairList> {
   }
 }
 
-DataRow wheelchairRow(BuildContext context, Wheelchair data) {
+DataRow wheelchairRow(BuildContext context, Wheelchair data, String route) {
   final database = Provider.of<FirestoreService>(context, listen: false);
   final WheelchairController wheelchairController =
       WheelchairController(firestoreService: database);
@@ -252,7 +256,7 @@ DataRow wheelchairRow(BuildContext context, Wheelchair data) {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return UpdateWheelchairForm(data: data, route: HOME_ROUTE);
+                    return UpdateWheelchairForm(data: data, route: route);
                   },
                 );
               },
@@ -268,6 +272,36 @@ DataRow wheelchairRow(BuildContext context, Wheelchair data) {
                   context: context,
                   builder: (BuildContext context) {
                     return ViewMessages(wheelchair: data);
+                  },
+                );
+              },
+            ),
+            SizedBox(width: Responsive.isDesktop(context) ? 16 : 8),
+            IconButton(
+              icon: Icon(
+                Icons.place,
+                size: Responsive.isDesktop(context) ? 16 : 8,
+              ),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return WheelchairLocation(wheelchair: data);
+                  },
+                );
+              },
+            ),
+            SizedBox(width: Responsive.isDesktop(context) ? 16 : 8),
+            IconButton(
+              icon: Icon(
+                Icons.control_camera,
+                size: Responsive.isDesktop(context) ? 16 : 8,
+              ),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return WheelchairNavigation(wheelchair: data, route: route);
                   },
                 );
               },

@@ -22,9 +22,11 @@ class UserController {
       @required User user,
       @required String password}) async {
     try {
-      await authService.signUpEmailPassword(
+      final newUser = await authService.signUpEmailPassword(
           email: user.email, password: password);
-      return await firestoreService.createNewDocument(users, user);
+      final path = FirestorePath.userPath(newUser.uid);
+      final docRef = Firestore.instance.document(path);
+      return await firestoreService.setDocument(docRef, user);
     } catch (e) {
       print(e);
       return false;
@@ -95,7 +97,7 @@ class UserController {
   List<DocumentSnapshot> paginatedDocumentList = [];
   int index = 0;
   Future<List<User>> getPaginatedUser(
-      {bool next = true, int length = 1}) async {
+      {bool next = true, int length = 10}) async {
     Query query;
     final temp = await getUsers();
     final total = temp.length;

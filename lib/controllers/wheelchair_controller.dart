@@ -56,7 +56,7 @@ class WheelchairController {
   List<DocumentSnapshot> paginatedDocumentList = [];
   int index = 0;
   Future<List<Wheelchair>> getPaginatedWheelchair(
-      {bool next = true, int length = 2}) async {
+      {bool next = true, int length = 10}) async {
     Query query;
     final temp = await getWheelchairs();
     final total = temp.length;
@@ -80,7 +80,6 @@ class WheelchairController {
 
           return wheelchairList;
         } else if (index < total) {
-          print('INDEX NORMAL');
           query = wheelchairs
               .orderBy('createdAt', descending: true)
               .startAfterDocument(paginatedDocumentList[index - 1])
@@ -122,6 +121,7 @@ class WheelchairController {
               .map((e) => Wheelchair.fromMap(e.documentID, e.data))
               .toList();
 
+          print('wheelchairList: ${wheelchairList.length}');
           return wheelchairList;
         } else {
           int startIndex = paginatedDocumentList.length - (length * 2);

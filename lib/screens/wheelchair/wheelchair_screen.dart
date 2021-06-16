@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sws_web/responsive.dart';
+import 'package:sws_web/routing/routes.dart';
 import 'package:sws_web/screens/dashboard/components/header.dart';
+import 'package:sws_web/screens/wheelchair/components/location_map.dart';
+import 'package:sws_web/screens/wheelchair/components/notified_wheelchairs.dart';
 
 import '../../constants.dart';
 import 'components/wheelchair_list.dart';
@@ -25,9 +28,11 @@ class WheelchairScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       //  Wheelchair
+                      // LocationMap(),
                       AvailableWheelchairs(),
+                      // NotifiedWheelchairs(),
                       SizedBox(height: kDefaultPadding),
-                      WheelchairList(),
+                      WheelchairList(route: WHEELCHAIRS_ROUTE),
                       if (Responsive.isMobile(context))
                         SizedBox(height: kDefaultPadding),
                       if (Responsive.isMobile(context)) WheelchairDetails(),

@@ -30,7 +30,6 @@ class AuthWidget extends StatelessWidget {
             )
           : SigninScreen();
     }
-    // new Timer.periodic(Duration(seconds: 10), (Timer t) => setState((){}));
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sws_web/constants.dart';
+import 'package:sws_web/controllers/location_controller.dart';
 import 'package:sws_web/controllers/message_controller.dart';
 import 'package:sws_web/controllers/user_controller.dart';
+import 'package:sws_web/models/location.dart';
 import 'package:sws_web/models/message.dart';
 import 'package:sws_web/models/user.dart';
 import 'package:sws_web/models/wheelchair.dart';
@@ -10,15 +12,15 @@ import 'package:sws_web/responsive.dart';
 import 'package:sws_web/services/firestore_service.dart';
 import 'package:sws_web/widgets/loading.dart';
 
-class ViewMessages extends StatefulWidget {
-  ViewMessages({@required this.wheelchair, Key key}) : super(key: key);
+class WheelchairLocation extends StatefulWidget {
+  WheelchairLocation({@required this.wheelchair, Key key}) : super(key: key);
   final Wheelchair wheelchair;
 
   @override
   _ViewMessagesState createState() => _ViewMessagesState();
 }
 
-class _ViewMessagesState extends State<ViewMessages> {
+class _ViewMessagesState extends State<WheelchairLocation> {
   int length = 10;
   ScrollController scrollController = ScrollController();
 
@@ -32,15 +34,15 @@ class _ViewMessagesState extends State<ViewMessages> {
   Widget build(BuildContext context) {
     FirestoreService firestoreService =
         Provider.of<FirestoreService>(context, listen: false);
-    MessageController messageController =
-        MessageController(firestoreService: firestoreService);
+    LocationController locationController =
+        LocationController(firestoreService: firestoreService);
 
     final Size _size = MediaQuery.of(context).size;
 
     return AlertDialog(
       backgroundColor: kBgColor,
       title: new Text(
-        'Message Log Wheelchair ${widget.wheelchair.plate}',
+        'Location Log Wheelchair ${widget.wheelchair.plate}',
         style: TextStyle(
             color: kSecondaryColor,
             fontSize: Responsive.isDesktop(context) ? 24 : 16,
@@ -51,20 +53,22 @@ class _ViewMessagesState extends State<ViewMessages> {
         width: _size.width * (Responsive.isDesktop(context) ? 0.3 : 0.5),
         // width: 222.0,
         child: StreamBuilder(
-          stream: messageController
-              .wheelchairMessagesStream(widget.wheelchair.uid, length: length),
+          stream: locationController
+              .wheelchairlocationStream(widget.wheelchair.uid, length: length),
           builder: (context, snapshot) {
             print('STREAM: $snapshot');
             if (snapshot.hasData) {
-              List<Message> messages = [];
+              List<Location> locations = [];
               List snapshots = snapshot.data.documents.toList();
+              print('SNAPSHOTS: ${snapshots.length}');
               snapshots.forEach((snapshot) {
-                Message temp = Message.fromSnapShot(snapshot);
-                if (temp.wheelchairId == widget.wheelchair.uid)
-                  messages.add(temp);
+                Location temp = Location.fromSnapShot(snapshot);
+                locations.add(temp);
+                // if (temp.wheelchairID == widget.wheelchair.uid)
+                //   locations.add(temp);
               });
 
-              final List<Row> chats = messages.map((_message) {
+              final List<Row> chats = locations.map((_location) {
                 return Row(
                   children: <Widget>[
                     Container(
@@ -72,37 +76,21 @@ class _ViewMessagesState extends State<ViewMessages> {
                       margin:
                           EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
                       decoration: BoxDecoration(
-                          color: _message.whom == 0
-                              ? Colors.amber.shade200
-                              : kPrimaryColor.shade200,
+                          color: kPrimaryColor.shade200,
                           borderRadius: BorderRadius.circular(7.0)),
                       child: Column(
                         children: [
                           Text(
-                            '${messageController.getStringSource(_message.whom)}',
+                            '${_location.name}',
                             style: TextStyle(
                                 color: kSecondaryColor,
                                 fontSize:
                                     Responsive.isDesktop(context) ? 20 : 12),
                           ),
                           Text(
-                            'Time Stamp: ${_message.createdAt}',
+                            'Time Stamp: ${_location.createdAt}',
                             style: TextStyle(
                                 color: kSecondaryColor.withOpacity(.7),
-                                fontSize:
-                                    Responsive.isDesktop(context) ? 20 : 12),
-                          ),
-                          Text(
-                            'Type: ${_message.label}',
-                            style: TextStyle(
-                                color: kSecondaryColor,
-                                fontSize:
-                                    Responsive.isDesktop(context) ? 20 : 12),
-                          ),
-                          Text(
-                            'Text: ${_message.text}',
-                            style: TextStyle(
-                                color: kSecondaryColor,
                                 fontSize:
                                     Responsive.isDesktop(context) ? 20 : 12),
                           ),
@@ -110,9 +98,7 @@ class _ViewMessagesState extends State<ViewMessages> {
                       ),
                     ),
                   ],
-                  mainAxisAlignment: _message.whom == 0
-                      ? MainAxisAlignment.end
-                      : MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                 );
               }).toList();
               return ListView.builder(

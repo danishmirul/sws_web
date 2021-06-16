@@ -54,14 +54,14 @@ class SideMenu extends StatelessWidget {
                   Navigator.pushReplacementNamed(context, USERS_ROUTE);
                 },
               ),
-              DrawerListTile(
-                title: "Location",
-                imgSrc: "icons/place_marker_96px.png",
-                selected: menuController.verifyRoute(LOCATION_ROUTE, route),
-                press: () {
-                  Navigator.pushReplacementNamed(context, LOCATION_ROUTE);
-                },
-              ),
+              // DrawerListTile(
+              //   title: "Location",
+              //   imgSrc: "icons/place_marker_96px.png",
+              //   selected: menuController.verifyRoute(LOCATION_ROUTE, route),
+              //   press: () {
+              //     Navigator.pushReplacementNamed(context, LOCATION_ROUTE);
+              //   },
+              // ),
               DrawerListTile(
                 title: "Profile",
                 imgSrc: "icons/person_96px.png",
