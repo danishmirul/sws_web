@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:sws_web/responsive.dart';
 import 'package:sws_web/routing/routes.dart';
 import 'package:sws_web/screens/dashboard/components/header.dart';
+import 'package:sws_web/screens/wheelchair/components/live_camera.dart';
 import 'package:sws_web/screens/wheelchair/components/location_map.dart';
 import 'package:sws_web/screens/wheelchair/components/notified_wheelchairs.dart';
+import 'package:web_socket_channel/html.dart';
 
 import '../../constants.dart';
 import 'components/wheelchair_list.dart';
@@ -13,6 +15,7 @@ import 'components/wheelchair_details.dart';
 class WheelchairScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final Size _size = MediaQuery.of(context).size;
     return SafeArea(
       child: SingleChildScrollView(
         padding: EdgeInsets.all(kDefaultPadding),
@@ -27,6 +30,15 @@ class WheelchairScreen extends StatelessWidget {
                   flex: 5,
                   child: Column(
                     children: [
+                      Container(
+                        padding: EdgeInsets.all(kDefaultPadding * 0.75),
+                        height: _size.height * 0.5,
+                        width: double.infinity,
+                        child: LiveCamera(
+                          channel: HtmlWebSocketChannel.connect(
+                              Uri.parse('ws://192.168.8.101:8888')),
+                        ),
+                      ),
                       //  Wheelchair
                       // LocationMap(),
                       AvailableWheelchairs(),

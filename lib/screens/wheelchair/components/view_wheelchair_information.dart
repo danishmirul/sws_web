@@ -66,7 +66,7 @@ class ViewWheelchairInformation extends StatelessWidget {
                 width: double.infinity,
                 child: LiveCamera(
                   channel: HtmlWebSocketChannel.connect(
-                      Uri.parse('ws://192.168.8.102:8888')),
+                      Uri.parse('ws://192.168.8.101:8888')),
                 ),
               ),
               Text(
