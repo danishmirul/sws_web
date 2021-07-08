@@ -14,13 +14,9 @@ class LocationController {
   CollectionReference locations = Firestore.instance.collection('locations');
 
   // Get
-  Stream<QuerySnapshot> wheelchairlocationStream(String idWheelchair,
-      {int length = 10}) {
+  Stream<QuerySnapshot> liveLocationStream() {
     try {
-      final query = locations
-          .where('wheelchairID', isEqualTo: idWheelchair)
-          .orderBy('createdAt', descending: true)
-          .limit(length);
+      final query = locations.orderBy('createdAt', descending: true).limit(1);
       return firestoreService.getDocumentsSnapshotQuery(query);
     } catch (e) {
       print(e);

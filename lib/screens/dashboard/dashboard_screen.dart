@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sws_web/responsive.dart';
 import 'package:sws_web/routing/routes.dart';
-import 'package:sws_web/screens/wheelchair/components/notified_wheelchairs.dart';
 
 import '../../constants.dart';
 import 'components/header.dart';

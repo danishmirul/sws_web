@@ -3,8 +3,6 @@ import 'package:sws_web/responsive.dart';
 import 'package:sws_web/routing/routes.dart';
 import 'package:sws_web/screens/dashboard/components/header.dart';
 import 'package:sws_web/screens/wheelchair/components/live_camera.dart';
-import 'package:sws_web/screens/wheelchair/components/location_map.dart';
-import 'package:sws_web/screens/wheelchair/components/notified_wheelchairs.dart';
 import 'package:web_socket_channel/html.dart';
 
 import '../../constants.dart';
@@ -32,11 +30,10 @@ class WheelchairScreen extends StatelessWidget {
                     children: [
                       Container(
                         padding: EdgeInsets.all(kDefaultPadding * 0.75),
-                        height: _size.height * 0.5,
                         width: double.infinity,
                         child: LiveCamera(
                           channel: HtmlWebSocketChannel.connect(
-                              Uri.parse('ws://192.168.8.101:8888')),
+                              Uri.parse('ws://192.168.8.102:8888')),
                         ),
                       ),
                       //  Wheelchair

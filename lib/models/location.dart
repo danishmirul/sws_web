@@ -2,14 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Location {
   String uid;
-  String wheelchairID;
-  String name;
+  List data;
   DateTime createdAt;
 
   Location({
     this.uid,
-    this.wheelchairID,
-    this.name,
+    this.data,
     createdAt,
   }) {
     if (createdAt == null || createdAt == 0)
@@ -21,21 +19,17 @@ class Location {
   Location.copy(Location from)
       : this(
           uid: from.uid,
-          wheelchairID: from.wheelchairID,
-          name: from.name,
+          data: from.data,
           createdAt: from.createdAt,
         );
 
   @override
-  String toString() =>
-      "{ uid:${this.uid}, wheelchairID:${this.wheelchairID}, name:${this.name} }";
+  String toString() => "{ uid:${this.uid}, data:${this.data} }";
 
   // initialised through snapshot
   Location.fromSnapShot(DocumentSnapshot snapshot) {
     this.uid = snapshot.documentID;
-    // this.uuid = snapshot.data['uuid'];
-    this.wheelchairID = snapshot.data['wheelchairID'];
-    this.name = snapshot.data['name'];
+    this.data = snapshot.data['data'];
     this.createdAt = snapshot.data['createdAt'].toDate();
   }
 
@@ -44,12 +38,8 @@ class Location {
     if (data == null || uid == null) {
       return null;
     }
-    final String wheelchairID = data['wheelchairID'];
-    if (wheelchairID == null) {
-      return null;
-    }
-    final String name = data['name'];
-    if (name == null) {
+    final List _data = data['data'];
+    if (_data == null) {
       return null;
     }
     final DateTime createdAt = data['createdAt'].toDate();
@@ -59,8 +49,7 @@ class Location {
 
     return Location(
       uid: uid,
-      wheelchairID: wheelchairID,
-      name: name,
+      data: _data,
       createdAt: createdAt,
     );
   }
@@ -68,8 +57,7 @@ class Location {
   // object to map
   Map<String, dynamic> toMap() {
     return {
-      'wheelchairID': wheelchairID,
-      'name': name,
+      'data': data,
       'createdAt': createdAt,
     };
   }

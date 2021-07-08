@@ -39,7 +39,7 @@ class _UpdateWheelchairFormState extends State<UpdateWheelchairForm> {
     return AlertDialog(
       backgroundColor: kBgColor,
       title: new Text(
-        'New Wheelchair Form',
+        'Update Wheelchair Form',
         style: TextStyle(
             color: kSecondaryColor,
             fontSize: Responsive.isDesktop(context) ? 24 : 16,
