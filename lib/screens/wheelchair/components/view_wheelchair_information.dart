@@ -8,7 +8,6 @@ import 'package:sws_web/screens/wheelchair/components/live_camera.dart';
 import 'package:sws_web/services/firestore_service.dart';
 import 'package:sws_web/widgets/progress_line.dart';
 import 'package:web_socket_channel/html.dart';
-import 'package:web_socket_channel/io.dart';
 
 class ViewWheelchairInformation extends StatelessWidget {
   const ViewWheelchairInformation({@required this.data, Key key})
@@ -62,11 +61,9 @@ class ViewWheelchairInformation extends StatelessWidget {
               ),
               Container(
                 padding: EdgeInsets.all(kDefaultPadding * 0.75),
-                height: _size.height * 0.5,
                 width: double.infinity,
                 child: LiveCamera(
-                  channel: HtmlWebSocketChannel.connect(
-                      Uri.parse('ws://192.168.8.100:8888')),
+                  channel: HtmlWebSocketChannel.connect(Uri.parse(IP_ADDRESS)),
                 ),
               ),
               Text(

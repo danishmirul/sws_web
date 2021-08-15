@@ -16,14 +16,14 @@ class NavigationController {
   CollectionReference navigations =
       Firestore.instance.collection('navigations');
 
+  Future<bool> createNewNavigation(Navigation navigation) async {
+    return await firestoreService.createNewDocument(navigations, navigation);
+  }
+
   // Get
-  Stream<QuerySnapshot> navigationStream(String idWheelchair,
-      {int length = 10}) {
+  Stream<QuerySnapshot> navigationStream(String idWheelchair) {
     try {
-      final query = navigations
-          .where('wheelchairID', isEqualTo: idWheelchair)
-          .orderBy('createdAt', descending: true)
-          .limit(length);
+      final query = navigations.where('wheelchairID', isEqualTo: idWheelchair);
       return firestoreService.getDocumentsSnapshotQuery(query);
     } catch (e) {
       print(e);

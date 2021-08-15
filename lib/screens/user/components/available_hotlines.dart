@@ -14,7 +14,9 @@ import '../../../constants.dart';
 class AvailableHotlines extends StatelessWidget {
   const AvailableHotlines({
     Key key,
+    @required this.route,
   }) : super(key: key);
+  final String route;
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +38,13 @@ class AvailableHotlines extends StatelessWidget {
         SizedBox(height: kDefaultPadding),
         Responsive(
           mobile: AvailableHotlineCardGridView(
+            route: route,
             crossAxisCount: _size.width < 650 ? 2 : 4,
             childAspectRatio: _size.width < 650 ? 1.3 : 1,
           ),
-          tablet: AvailableHotlineCardGridView(),
+          tablet: AvailableHotlineCardGridView(route: route),
           desktop: AvailableHotlineCardGridView(
+            route: route,
             childAspectRatio: _size.width < 1400 ? 1.1 : 1.4,
           ),
         ),
@@ -54,10 +58,12 @@ class AvailableHotlineCardGridView extends StatelessWidget {
     Key key,
     this.crossAxisCount = 4,
     this.childAspectRatio = 1,
+    @required this.route,
   }) : super(key: key);
 
   final int crossAxisCount;
   final double childAspectRatio;
+  final String route;
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +87,8 @@ class AvailableHotlineCardGridView extends StatelessWidget {
               mainAxisSpacing: kDefaultPadding,
               childAspectRatio: childAspectRatio,
             ),
-            itemBuilder: (context, index) => UserInfoCard(data: users[index]),
+            itemBuilder: (context, index) =>
+                UserInfoCard(route: route, data: users[index]),
           );
         } else
           return Loading();

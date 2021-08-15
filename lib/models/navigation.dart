@@ -4,14 +4,20 @@ class Navigation {
   String uid;
   String wheelchairID;
   String instruction;
+  String console;
+  String msg;
   bool request;
+  bool execute;
   DateTime createdAt;
 
   Navigation({
     this.uid,
     this.wheelchairID,
     this.instruction = '',
+    this.console = '',
+    this.msg = '',
     this.request,
+    this.execute,
     createdAt,
   }) {
     if (createdAt == null || createdAt == 0)
@@ -25,13 +31,16 @@ class Navigation {
           uid: from.uid,
           wheelchairID: from.wheelchairID,
           instruction: from.instruction,
+          console: from.console,
+          msg: from.msg,
           request: from.request,
+          execute: from.execute,
           createdAt: from.createdAt,
         );
 
   @override
   String toString() =>
-      "{ uid:${this.uid}, wheelchairID:${this.wheelchairID}, instruction:${this.instruction}, request:${this.request} }";
+      "{ uid:${this.uid}, wheelchairID:${this.wheelchairID}, instruction:${this.instruction}, msg:${this.msg}, request:${this.request} }";
 
   // initialised through snapshot
   Navigation.fromSnapShot(DocumentSnapshot snapshot) {
@@ -39,7 +48,10 @@ class Navigation {
     // this.uuid = snapshot.data['uuid'];
     this.wheelchairID = snapshot.data['wheelchairID'];
     this.instruction = snapshot.data['instruction'];
+    this.console = snapshot.data['console'];
+    this.msg = snapshot.data['msg'];
     this.request = snapshot.data['request'];
+    this.execute = snapshot.data['execute'];
     this.createdAt = snapshot.data['createdAt'].toDate();
   }
 
@@ -56,8 +68,20 @@ class Navigation {
     if (instruction == null) {
       return null;
     }
+    final String console = data['console'];
+    if (console == null) {
+      return null;
+    }
+    final String msg = data['msg'];
+    if (msg == null) {
+      return null;
+    }
     final bool request = data['request'];
     if (request == null) {
+      return null;
+    }
+    final bool execute = data['execute'];
+    if (execute == null) {
       return null;
     }
     final DateTime createdAt = data['createdAt'].toDate();
@@ -69,7 +93,10 @@ class Navigation {
       uid: uid,
       wheelchairID: wheelchairID,
       instruction: instruction,
+      console: console,
+      msg: msg,
       request: request,
+      execute: execute,
       createdAt: createdAt,
     );
   }
@@ -79,7 +106,10 @@ class Navigation {
     return {
       'wheelchairID': wheelchairID,
       'instruction': instruction,
+      'console': console,
+      'msg': msg,
       'request': request,
+      'execute': execute,
       'createdAt': createdAt,
     };
   }

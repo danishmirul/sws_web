@@ -11,8 +11,10 @@ import 'package:sws_web/widgets/loading.dart';
 import '../../../constants.dart';
 
 class UserInfoCard extends StatelessWidget {
-  const UserInfoCard({@required this.data, Key key}) : super(key: key);
+  const UserInfoCard({@required this.data, @required this.route, Key key})
+      : super(key: key);
   final User data;
+  final String route;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +53,7 @@ class UserInfoCard extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return UpdateForm(data: data, size: _size);
+                      return UpdateForm(route: route, data: data, size: _size);
                     },
                   );
                 },
@@ -142,10 +144,12 @@ class UserInfoCard extends StatelessWidget {
 }
 
 class UpdateForm extends StatefulWidget {
-  UpdateForm({@required this.data, @required this.size, Key key})
+  UpdateForm(
+      {@required this.data, @required this.size, @required this.route, Key key})
       : super(key: key);
   final Size size;
   final User data;
+  final String route;
 
   @override
   _UpdateFormState createState() => _UpdateFormState();
@@ -192,40 +196,42 @@ class _UpdateFormState extends State<UpdateForm> {
                 ],
               ),
             ),
-      actions: <Widget>[
-        new TextButton(
-          child: new CustomText(
-            text: 'Cancel',
-            color: Colors.red,
-            weight: FontWeight.bold,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        SizedBox(width: kDefaultPadding),
-        new TextButton(
-          child: Row(
-            children: [
-              Icon(
-                Icons.save,
-                color: kSecondaryColor,
+      actions: isLoading
+          ? []
+          : <Widget>[
+              new TextButton(
+                child: new CustomText(
+                  text: 'Cancel',
+                  color: Colors.red,
+                  weight: FontWeight.bold,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
-              CustomText(
-                text: 'Save',
-                color: kSecondaryColor,
-                weight: FontWeight.bold,
+              SizedBox(width: kDefaultPadding),
+              new TextButton(
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.save,
+                      color: kSecondaryColor,
+                    ),
+                    CustomText(
+                      text: 'Save',
+                      color: kSecondaryColor,
+                      weight: FontWeight.bold,
+                    ),
+                  ],
+                ),
+                onPressed: () async {
+                  setState(() {
+                    isLoading = true;
+                  });
+                  _save();
+                },
               ),
             ],
-          ),
-          onPressed: () async {
-            setState(() {
-              isLoading = true;
-            });
-            _save();
-          },
-        ),
-      ],
     );
   }
 
@@ -288,7 +294,7 @@ class _UpdateFormState extends State<UpdateForm> {
       });
 
       if (success) {
-        Navigator.pushReplacementNamed(context, '/');
+        Navigator.pushReplacementNamed(context, widget.route);
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Saved Successfully')));
       }

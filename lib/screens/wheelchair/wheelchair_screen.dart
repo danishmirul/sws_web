@@ -3,8 +3,6 @@ import 'package:sws_web/responsive.dart';
 import 'package:sws_web/routing/routes.dart';
 import 'package:sws_web/screens/dashboard/components/header.dart';
 import 'package:sws_web/screens/wheelchair/components/live_camera.dart';
-import 'package:sws_web/screens/wheelchair/components/location_map.dart';
-import 'package:sws_web/screens/wheelchair/components/notified_wheelchairs.dart';
 import 'package:web_socket_channel/html.dart';
 
 import '../../constants.dart';
@@ -15,7 +13,6 @@ import 'components/wheelchair_details.dart';
 class WheelchairScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Size _size = MediaQuery.of(context).size;
     return SafeArea(
       child: SingleChildScrollView(
         padding: EdgeInsets.all(kDefaultPadding),
@@ -32,16 +29,16 @@ class WheelchairScreen extends StatelessWidget {
                     children: [
                       Container(
                         padding: EdgeInsets.all(kDefaultPadding * 0.75),
-                        height: _size.height * 0.5,
                         width: double.infinity,
                         child: LiveCamera(
                           channel: HtmlWebSocketChannel.connect(
-                              Uri.parse('ws://192.168.8.100:8888')),
+                              Uri.parse(IP_ADDRESS)),
+                          position: true,
                         ),
                       ),
                       //  Wheelchair
                       // LocationMap(),
-                      AvailableWheelchairs(),
+                      AvailableWheelchairs(route: WHEELCHAIRS_ROUTE),
                       // NotifiedWheelchairs(),
                       SizedBox(height: kDefaultPadding),
                       WheelchairList(route: WHEELCHAIRS_ROUTE),

@@ -77,7 +77,7 @@ class WheelchairDetails extends StatelessWidget {
             }
             if (numUnavailable > 0) {
               dataStatus.add(PieChartSectionData(
-                color: Color(0xFF26E5FF),
+                color: Colors.amber,
                 value: numUnavailable,
                 showTitle: false,
                 radius: 22,
@@ -86,7 +86,7 @@ class WheelchairDetails extends StatelessWidget {
             }
             if (numMaintenance > 0) {
               dataStatus.add(PieChartSectionData(
-                color: Color(0xFFFFCF26),
+                color: Colors.deepOrange,
                 value: numMaintenance,
                 showTitle: false,
                 radius: 19,
@@ -213,7 +213,7 @@ class WheelchairDetails extends StatelessWidget {
                     SizedBox(height: kDefaultPadding),
                     Chart(
                       data: dataStatus,
-                      focusData: 'Availability',
+                      focusData: 'Available',
                       focusValue: perAvailable,
                     ),
                     WheelchairDetailCard(
@@ -250,7 +250,7 @@ class WheelchairDetails extends StatelessWidget {
                     SizedBox(height: kDefaultPadding),
                     Chart(
                       data: dataBattery,
-                      focusData: 'Full Battery',
+                      focusData: 'High Battery',
                       focusValue: perBatteryHigh,
                     ),
                     WheelchairDetailCard(
@@ -281,7 +281,7 @@ class WheelchairDetails extends StatelessWidget {
                     SizedBox(height: kDefaultPadding),
                     Chart(
                       data: dataAccessibility,
-                      focusData: 'Accessibility',
+                      focusData: 'Accessible',
                       focusValue: perAccessible,
                     ),
                     WheelchairDetailCard(

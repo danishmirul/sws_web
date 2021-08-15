@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sws_web/responsive.dart';
 import 'package:sws_web/routing/routes.dart';
-import 'package:sws_web/screens/wheelchair/components/notified_wheelchairs.dart';
 
 import '../../constants.dart';
 import 'components/header.dart';
@@ -29,7 +28,7 @@ class DashboardScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       //  Wheelchair
-                      AvailableWheelchairs(),
+                      AvailableWheelchairs(route: HOME_ROUTE),
                       // NotifiedWheelchairs(),
                       SizedBox(height: kDefaultPadding),
                       WheelchairList(route: HOME_ROUTE),
@@ -39,7 +38,7 @@ class DashboardScreen extends StatelessWidget {
 
                       SizedBox(height: kDefaultPadding * 2),
                       //  User
-                      AvailableHotlines(),
+                      AvailableHotlines(route: HOME_ROUTE),
                       SizedBox(height: kDefaultPadding),
                       UserList(),
                       if (Responsive.isMobile(context))

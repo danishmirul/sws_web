@@ -60,16 +60,11 @@ class _ResetPasswordDialogState extends State<ResetPasswordDialog> {
         color: kSecondaryColor,
         weight: FontWeight.bold,
       ),
-      content: Column(
-        children: [
-          CustomText(
-            text:
-                'Are you sure to reset the password?\nAn email will send to you to reset the password.',
-            color: kSecondaryColor,
-            weight: FontWeight.bold,
-          ),
-          isLoading ? Loading() : Container()
-        ],
+      content: CustomText(
+        text:
+            'Are you sure to reset the password?\nAn email will send to you to reset the password. (${widget.email})',
+        color: kSecondaryColor,
+        weight: FontWeight.bold,
       ),
       actions: <Widget>[
         new TextButton(
@@ -93,8 +88,18 @@ class _ResetPasswordDialogState extends State<ResetPasswordDialog> {
               final auth =
                   Provider.of<FirebaseAuthService>(context, listen: false);
               setState(() => isLoading = true);
-              await auth.resetPassword(email: '');
+              await auth.resetPassword(email: widget.email);
               setState(() => isLoading = false);
+              Navigator.pop(context);
+              try {
+                final auth =
+                    Provider.of<FirebaseAuthService>(context, listen: false);
+                await auth.signOut();
+              } catch (e) {
+                print('_signOut Catch: $e');
+              }
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Email has been sent.')));
             } catch (e) {
               print('_resetPassword Catch: $e');
             }

@@ -276,21 +276,21 @@ DataRow wheelchairRow(BuildContext context, Wheelchair data, String route) {
                 );
               },
             ),
-            SizedBox(width: Responsive.isDesktop(context) ? 16 : 8),
-            IconButton(
-              icon: Icon(
-                Icons.place,
-                size: Responsive.isDesktop(context) ? 16 : 8,
-              ),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return WheelchairLocation(wheelchair: data);
-                  },
-                );
-              },
-            ),
+            // SizedBox(width: Responsive.isDesktop(context) ? 16 : 8),
+            // IconButton(
+            //   icon: Icon(
+            //     Icons.place,
+            //     size: Responsive.isDesktop(context) ? 16 : 8,
+            //   ),
+            //   onPressed: () {
+            //     showDialog(
+            //       context: context,
+            //       builder: (BuildContext context) {
+            //         return WheelchairLocation(wheelchair: data);
+            //       },
+            //     );
+            //   },
+            // ),
             SizedBox(width: Responsive.isDesktop(context) ? 16 : 8),
             IconButton(
               icon: Icon(
