@@ -62,11 +62,9 @@ class ViewWheelchairInformation extends StatelessWidget {
               ),
               Container(
                 padding: EdgeInsets.all(kDefaultPadding * 0.75),
-                height: _size.height * 0.5,
                 width: double.infinity,
                 child: LiveCamera(
-                  channel: HtmlWebSocketChannel.connect(
-                      Uri.parse('ws://192.168.8.101:8888')),
+                  channel: HtmlWebSocketChannel.connect(Uri.parse(IP_ADDRESS)),
                 ),
               ),
               Text(

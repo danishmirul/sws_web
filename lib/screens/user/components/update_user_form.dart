@@ -75,49 +75,51 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
                 ),
               ),
             ),
-      actions: <Widget>[
-        new TextButton(
-          child: new CustomText(
-            text: 'Cancel',
-            color: Colors.red,
-            weight: FontWeight.bold,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        SizedBox(width: kDefaultPadding),
-        new TextButton(
-          child: Row(
-            children: [
-              Icon(
-                Icons.save,
-                color: kSecondaryColor,
+      actions: isLoading
+          ? []
+          : <Widget>[
+              new TextButton(
+                child: new CustomText(
+                  text: 'Cancel',
+                  color: Colors.red,
+                  weight: FontWeight.bold,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
-              CustomText(
-                text: 'Save',
-                color: kSecondaryColor,
-                weight: FontWeight.bold,
+              SizedBox(width: kDefaultPadding),
+              new TextButton(
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.save,
+                      color: kSecondaryColor,
+                    ),
+                    CustomText(
+                      text: 'Save',
+                      color: kSecondaryColor,
+                      weight: FontWeight.bold,
+                    ),
+                  ],
+                ),
+                onPressed: () async {
+                  setState(() {
+                    isLoading = true;
+                  });
+                  if (_formKey.currentState.validate()) {
+                    _formKey.currentState.save();
+                    _save();
+                  } else {
+                    setState(() {
+                      isLoading = false;
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Complete the form.')));
+                  }
+                },
               ),
             ],
-          ),
-          onPressed: () async {
-            setState(() {
-              isLoading = true;
-            });
-            if (_formKey.currentState.validate()) {
-              _formKey.currentState.save();
-              _save();
-            } else {
-              setState(() {
-                isLoading = false;
-              });
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text('Complete the form.')));
-            }
-          },
-        ),
-      ],
     );
   }
 
@@ -133,7 +135,7 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
       setState(() {
         isLoading = false;
 
-        if (!success) _showError = true;
+        // if (!success) _showError = true;
       });
 
       if (success) {

@@ -226,7 +226,7 @@ DataRow wheelchairRow(BuildContext context, User data) {
                   builder: (BuildContext context) {
                     return UpdateUserForm(
                       data: data,
-                      route: HOME_ROUTE,
+                      route: USERS_ROUTE,
                     );
                   },
                 );

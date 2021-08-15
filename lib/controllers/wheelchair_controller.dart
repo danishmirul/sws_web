@@ -28,6 +28,15 @@ class WheelchairController {
     return documents != null ? Wheelchair.fromSnapShot(documents) : null;
   }
 
+  Future<Wheelchair> getWheelchairByPlate(String plate) async {
+    Query query = wheelchairs.where('plate', isEqualTo: plate);
+    final documents = await firestoreService.getDocumentsQeury(query);
+    List<Wheelchair> wheelchairList = <Wheelchair>[];
+    wheelchairList =
+        documents.map((e) => Wheelchair.fromMap(e.documentID, e.data)).toList();
+    return wheelchairList.length > 0 ? wheelchairList[0] : null;
+  }
+
   Future<List<Wheelchair>> getWheelchairs() async {
     final documents = await firestoreService.getDocuments(wheelchairs);
 

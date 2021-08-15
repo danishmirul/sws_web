@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sws_web/models/coordinate.dart';
 import 'package:sws_web/models/location.dart';
 import 'package:sws_web/models/wheelchair.dart';
 import 'package:sws_web/services/firestore_service.dart';
@@ -12,6 +13,12 @@ class LocationController {
   final FirestoreService firestoreService;
 
   CollectionReference locations = Firestore.instance.collection('locations');
+  CollectionReference coordinates =
+      Firestore.instance.collection('coordinates');
+
+  Future<bool> addCoordinate(Coordinate coordinate) async {
+    return await firestoreService.createNewDocument(coordinates, coordinate);
+  }
 
   // Get
   Stream<QuerySnapshot> liveLocationStream() {

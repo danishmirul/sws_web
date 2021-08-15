@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sws_web/responsive.dart';
+import 'package:sws_web/routing/routes.dart';
 import 'package:sws_web/screens/dashboard/components/header.dart';
 
 import '../../constants.dart';
@@ -24,7 +25,7 @@ class UserScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       //  User
-                      AvailableHotlines(),
+                      AvailableHotlines(route: USERS_ROUTE),
                       SizedBox(height: kDefaultPadding),
                       UserList(),
                       if (Responsive.isMobile(context))

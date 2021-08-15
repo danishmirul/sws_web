@@ -13,8 +13,10 @@ import '../../../constants.dart';
 
 class AvailableWheelchairs extends StatelessWidget {
   const AvailableWheelchairs({
+    @required this.route,
     Key key,
   }) : super(key: key);
+  final String route;
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +38,13 @@ class AvailableWheelchairs extends StatelessWidget {
         SizedBox(height: kDefaultPadding),
         Responsive(
           mobile: AvailableWheelchairCardGridView(
+            route: route,
             crossAxisCount: _size.width < 650 ? 2 : 4,
             childAspectRatio: _size.width < 650 ? 1.3 : 1,
           ),
-          tablet: AvailableWheelchairCardGridView(),
+          tablet: AvailableWheelchairCardGridView(route: route),
           desktop: AvailableWheelchairCardGridView(
+            route: route,
             childAspectRatio: _size.width < 1400 ? 1.1 : 1.4,
           ),
         ),
@@ -54,10 +58,12 @@ class AvailableWheelchairCardGridView extends StatelessWidget {
     Key key,
     this.crossAxisCount = 4,
     this.childAspectRatio = 1,
+    @required this.route,
   }) : super(key: key);
 
   final int crossAxisCount;
   final double childAspectRatio;
+  final String route;
 
   @override
   Widget build(BuildContext context) {
@@ -81,8 +87,10 @@ class AvailableWheelchairCardGridView extends StatelessWidget {
               mainAxisSpacing: kDefaultPadding,
               childAspectRatio: childAspectRatio,
             ),
-            itemBuilder: (context, index) =>
-                WheelchairInfoCard(data: wheelchairs[index]),
+            itemBuilder: (context, index) => WheelchairInfoCard(
+              data: wheelchairs[index],
+              route: route,
+            ),
           );
         } else
           return Loading();
